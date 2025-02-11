@@ -1,0 +1,6 @@
+bin/
+dist/
+obj/
+.idea/
+ModList.zip
+Folder.DotSettings.user
