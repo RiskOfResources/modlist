@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System.Text;
+using BepInEx;
 using BepInEx.Bootstrap;
 using RoR2.UI;
 using UnityEngine;
@@ -33,14 +34,26 @@ namespace ModList
       }
 
       var prevMaxMessages = RoR2.Console.maxMessages.value;
-      RoR2.Console.maxMessages.value = Chainloader.PluginInfos.Count + prevMaxMessages;
-      Debug.Log("Loaded Plugins:");
-      foreach (var plugin in Chainloader.PluginInfos)
-      {
-        Debug.Log(plugin.Value.ToString());
-      }
+      var newMaxMessageValue = RoR2.Console.maxMessages.value = 2 * (Chainloader.PluginInfos.Count + 1) + prevMaxMessages;
+      On.RoR2.Console.SaveArchiveConVars += ConsoleOnSaveArchiveConVars;
 
-      RoR2.Console.maxMessages.value = prevMaxMessages;
+      StringBuilder sb = new();
+      sb.AppendLine();
+      sb.AppendLine("---- Loaded Plugins ----");
+      foreach (var plugin in Chainloader.PluginInfos) {
+        sb.AppendLine(plugin.Value.ToString());
+      }
+ 
+      Debug.Log(sb.ToString());
+      void ConsoleOnSaveArchiveConVars(On.RoR2.Console.orig_SaveArchiveConVars orig, RoR2.Console self) {
+        // restore original value
+        if (RoR2.Console.maxMessages.value == newMaxMessageValue) {
+          RoR2.Console.maxMessages.value = prevMaxMessages;
+        }
+ 
+        orig(self);
+        On.RoR2.Console.SaveArchiveConVars -= ConsoleOnSaveArchiveConVars;
+      }
     }
   }
 }
