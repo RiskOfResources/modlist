@@ -1,6 +1,6 @@
 {
   "name": "ModList",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "",
   "description": "Lists loaded mods at the end of a run",
   "dependencies": [

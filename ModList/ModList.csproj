@@ -3,18 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>com.riskofresources.ModList</AssemblyName>
-    <Product>ModList</Product>
     <Description>Lists loaded mods at the end of a run</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.*" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
-    <PackageReference Include="MMHOOK.RoR2" Version="2024.12.10">
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.8" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+    <PackageReference Include="MMHOOK.RoR2" Version="2025.6.3">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="RiskOfRain2.GameLibs" Version="1.3.6-r.0" />
@@ -35,8 +34,9 @@
     </ItemGroup>
 
     <Copy SourceFiles="..\README.md" DestinationFolder="@(Assembly)" />
+    <Copy SourceFiles="..\CHANGELOG.md" DestinationFolder="@(Assembly)" />
     <Copy SourceFiles="@(Resources)" DestinationFolder="@(Assembly)" />
-    <Copy SourceFiles="$(OutputPath)com.riskofresources.ModList.dll" DestinationFiles="$(OutputPath)ModList.dll" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFiles="$(OutputPath)/ModList.dll" />
     <Copy SourceFiles="$(OutputPath)ModList.dll" DestinationFolder="@(Assembly)" />
     <ZipDirectory Overwrite="True" SourceDirectory="@(Assembly)" DestinationFile="dist\$(ProjectName).zip" />
   </Target>
