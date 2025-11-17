@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Globalization;
+using System.Text;
 using BepInEx;
 using BepInEx.Bootstrap;
 using RoR2.UI;
@@ -39,7 +41,9 @@ namespace ModList
 
       StringBuilder sb = new();
       sb.AppendLine();
-      sb.AppendLine("---- Loaded Plugins ----");
+      var now = DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture);
+      sb.AppendLine($"Mod List: {now}");
+      sb.AppendLine("----------------");
       foreach (var plugin in Chainloader.PluginInfos) {
         sb.AppendLine(plugin.Value.ToString());
       }
